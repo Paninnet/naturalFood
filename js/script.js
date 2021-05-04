@@ -95,6 +95,7 @@ function setClock(element, endtime) {
     item.addEventListener("click",showModal)
   });
   const closeModal = document.querySelector('[data-close]')
+
   closeModal.addEventListener("click", hideModal)
   modal.addEventListener("click",(event)=>{
     if (event.target === modal) {
@@ -108,13 +109,27 @@ document.addEventListener('keydown',(e)=>{
     hideModal()
   }
 })
+
+
 function showModal() {
   modal.style.display="block"
-  const body = document.querySelector('body').style.position = "fixed"
+  document.body.style.overflow = 'hidden';
+  clearInterval(modalTimeout)
 }
 function hideModal() {
   modal.style.display = "none"
-  const body = document.querySelector('body').style.position = ""
+  document.body.style.overflow = '';
 }
+
+function scrollModal() {
+  if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+              showModal();
+              window.removeEventListener('scroll', scrollModal);
+          }
+}
+
+const modalTimeout = setTimeout(showModal,5000)
+
+window.addEventListener("scroll",scrollModal)
 
 })
