@@ -1,9 +1,9 @@
 window.addEventListener("DOMContentLoaded",()=>{
+
+  // ТАБЫ
   const tabcontent = document.querySelectorAll('.tabcontent')
   const tabheader__items = document.querySelector('.tabheader__items')
   const tabheader__item = document.querySelectorAll('.tabheader__item')
-console.log(tabheader__item);
-
 
 function hideAllTabs() {
   tabcontent.forEach((item) => {
@@ -34,4 +34,87 @@ function showTab(i=0) {
 
 hideAllTabs()
 showTab()
+
+// ТАЙМЕР
+
+const deadLine ="2021-09-30"
+function getTimeRemaining(endtime) {
+  const t = Date.parse(endtime) - Date.parse(new Date())
+  let days = Math.floor(t / (1000 * 60 * 60 * 24))
+  let hours = Math.floor((t / (1000 * 60 * 60) ) % 24)
+  let minutes = Math.floor((t / 1000 / 60) % 60)
+  let seconds = Math.floor((t / 1000) % 60)
+
+  return {
+    "total": t,
+    "days":days,
+    "hours":hours,
+    "minutes":minutes,
+    "seconds":seconds
+  }
+
+}
+
+function getZero(num) {
+  if (num >=0 && num <10) {
+    return `0${num}`
+  }
+  else{
+    return num
+  }
+}
+function setClock(element, endtime) {
+  let time = document.querySelector(element)
+  let days = time.querySelector('#days')
+  let hours = time.querySelector('#hours')
+  let minutes = time.querySelector('#minutes')
+  let seconds = time.querySelector('#seconds')
+  let timeInterval = setInterval(uptadeClock, 1000)
+  uptadeClock()
+
+  function uptadeClock() {
+    let time = getTimeRemaining(endtime)
+
+    days.innerHTML = getZero(time.days)
+    hours.innerHTML = getZero(time.hours)
+    minutes.innerHTML = getZero(time.minutes)
+    seconds.innerHTML = getZero(time.seconds)
+
+    if (time.total <= 0){
+      clearInteval(timeInterval)
+    }
+  }
+
+}
+  setClock('.timer', deadLine)
+
+  // МОДАЛЬНОЕ
+
+  const modal = document.querySelector('.modal')
+  const openModal = document.querySelectorAll('[data-modal]').forEach((item) => {
+    item.addEventListener("click",showModal)
+  });
+  const closeModal = document.querySelector('[data-close]')
+  closeModal.addEventListener("click", hideModal)
+  modal.addEventListener("click",(event)=>{
+    if (event.target === modal) {
+      hideModal()
+    }
+  })
+
+
+document.addEventListener('keydown',(e)=>{
+  if(e.code ==="Escape" &&  modal.style.display==="block"){
+    hideModal()
+  }
+})
+function showModal() {
+  modal.style.display="block"
+  const body = document.querySelector('body').style.position = "fixed"
+}
+function hideModal() {
+  modal.style.display = "none"
+  const body = document.querySelector('body').style.position = ""
+}
+
 })
