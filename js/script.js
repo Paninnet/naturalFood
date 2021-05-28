@@ -220,40 +220,29 @@ window.addEventListener("DOMContentLoaded", () => {
         margin:0 auto;
       `
       form.append(newBlock)
-
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php')
-
-      request.setRequestHeader('Content-type', 'application/json')
+      
       const formData = new FormData(form)
 
       let obj ={}
       formData.forEach((value, key)=>{
         obj[key]=value
       })
-
-      let json = JSON.stringify(obj)
-
-      request.send(json)
-
-      request.addEventListener("load", () => {
-        if (request.status === 200) {
-          console.log(request.response);
+      fetch('server1.php',{
+        method:"POST",
+        headers:{
+          'Content-type':'application/json'
+        },
+        body:JSON.stringify(obj)
+      })
+      .then(data=>data.text())
+      .then(data=>{
+          console.log(data);
           showThanksModal(message.ready)
-
-          let inputs = form.querySelectorAll('input')
-
-          inputs.forEach(item => {
-            item.value = ""
-          })
-
-          
           newBlock.remove()
-            
-
-        } else {
-          showThanksModal(message.failure)
-        }
+      }).catch(()=>{
+        showThanksModal(message.failure)
+      }).finally(()=>{
+           let inputs = form.querySelectorAll('input').forEach(item => {item.value = ""})
       })
     })
   }
@@ -280,6 +269,7 @@ window.addEventListener("DOMContentLoaded", () => {
       closeModal()
     },4000)
   }
+
 })
 
 
