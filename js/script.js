@@ -129,7 +129,7 @@ function scrollModal() {
           }
 }
 
-// const modalTimeout = setTimeout(showModal,5000)
+const modalTimeout = setTimeout(showModal,5000)
 
 window.addEventListener("scroll",scrollModal)
 
@@ -138,12 +138,13 @@ window.addEventListener("scroll",scrollModal)
 
 
 class MenuCard {
-  constructor(img,alt,title,text,price,pElement) {
+  constructor(img,alt,title,text,price,pElement,...rest) {
     this.img= img;
     this.alt = alt
     this.title = title;
     this.text = text;
     this.price = price;
+    this.rest = rest
     this.dollar = 75;
     this.selector = document.querySelector(pElement)
     this.convert()
@@ -153,8 +154,12 @@ class MenuCard {
   }
   render(){
     let element = document.createElement('div')
+    if (this.rest.length === 0) {
+      this.rest.push("menu__item")
+    }
+    this.rest.forEach((item) => element.classList.add(item));
+
     element.innerHTML = `
-        <div class="menu__item">
             <img src=${this.img} alt=${this.alt}>
             <h3 class="menu__item-subtitle">${this.title}</h3>
             <div class="menu__item-descr">${this.text}</div>
@@ -162,8 +167,7 @@ class MenuCard {
             <div class="menu__item-price">
                 <div class="menu__item-cost">Цена:</div>
                 <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
-            </div>
-        </div>`;
+            </div>`
     this.selector.append(element)
   }
 }
@@ -172,7 +176,9 @@ new MenuCard("img/tabs/vegy.jpg",
 'Меню "Фитнес"',
 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
 15,
-".menu .container").render()
+".menu .container",
+"menu__item",
+"big").render()
 
 new MenuCard(
     "img/tabs/post.jpg",
