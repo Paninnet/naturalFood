@@ -227,7 +227,7 @@ window.addEventListener("DOMContentLoaded", () => {
       formData.forEach((value, key)=>{
         obj[key]=value
       })
-      fetch('server1.php',{
+      fetch('server.php',{
         method:"POST",
         headers:{
           'Content-type':'application/json'
