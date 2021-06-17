@@ -351,7 +351,7 @@ window.addEventListener("DOMContentLoaded", () => {
       showCurrentSlide(allImg)
     }
 
-    console.log(currentIndex);
+    
   })
 
 
@@ -425,7 +425,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         if (target.getAttribute('data-activity')) {
           activit = target.getAttribute('data-activity')
-          console.log(sex,activit);
+
           if (sex === 447.8) {
             result =( calcAllCalories(sex,9.563,1.85,4.676,activit))
           }
@@ -475,7 +475,7 @@ window.addEventListener("DOMContentLoaded", () => {
     age = +document.querySelector("#age").value
 
     let res = ((+genderCoeff + (+weightCoeff * +weight) + (+heightCoeff * +height)-(+ageCoeff * +age))) * +activityCoeff
-    console.log(genderCoeff,weightCoeff,heightCoeff,ageCoeff,activityCoeff,weight,height,age,res);
+    
     return res
     
   }
