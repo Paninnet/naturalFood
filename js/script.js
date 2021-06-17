@@ -172,10 +172,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  let getResource = async (url) =>{
+  let getResource = async (url) => {
     let res = await fetch(url)
 
-    if (!res.ok){
+    if (!res.ok) {
       throw new Error(`Could not fetch ${url}, status: ${res.status}`)
     }
     return await res.json()
@@ -205,17 +205,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // getResource('http://localhost:3000/menu')
   // .then(data =>{
-    // data.forEach(({img, altimg, title, descr, price}) =>{
-    //   new MenuCard(img, altimg, title, descr, price, '.menu .container').render()
-    // })
+  // data.forEach(({img, altimg, title, descr, price}) =>{
+  //   new MenuCard(img, altimg, title, descr, price, '.menu .container').render()
   // })
- 
-  axios.get('http://localhost:3000/menu')
-  .then(data => {
-    data.data.forEach(({img, altimg, title, descr, price}) =>{
-      new MenuCard(img, altimg, title, descr, price, '.menu .container').render()
-    })
-  } )
+  // })
+
+
+  // РАЗКОМЕНТИРОВАТЬ ПРИ ИНТЕРНЕТЕ 
+  // axios.get('http://localhost:3000/menu')
+  // .then(data => {
+  //   data.data.forEach(({img, altimg, title, descr, price}) =>{
+  //     new MenuCard(img, altimg, title, descr, price, '.menu .container').render()
+  //   })
+  // } )
 
   let form = document.querySelectorAll('form').forEach(item => {
     bindpostForm(item)
@@ -227,13 +229,13 @@ window.addEventListener("DOMContentLoaded", () => {
     failure: "failure"
   }
 
-  let postData = async (url, data) =>{
+  let postData = async (url, data) => {
     let res = await fetch(url, {
-      method:"POST",
-      headers:{
-        'Content-type':'application/json'
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
       },
-      body:data
+      body: data
     })
     return await res.json()
   }
@@ -249,7 +251,7 @@ window.addEventListener("DOMContentLoaded", () => {
         margin:0 auto;
       `
       form.append(newBlock)
-      
+
       const formData = new FormData(form)
 
       // let obj ={}
@@ -257,19 +259,19 @@ window.addEventListener("DOMContentLoaded", () => {
       //   obj[key]=value
       // })
 
-      const json =JSON.stringify(Object.fromEntries(formData.entries()))
+      const json = JSON.stringify(Object.fromEntries(formData.entries()))
 
 
-      postData('http://localhost:3000/requests',json)
-      .then(data=>{
+      postData('http://localhost:3000/requests', json)
+        .then(data => {
           console.log(data);
           showThanksModal(message.ready)
           newBlock.remove()
-      }).catch(()=>{
-        showThanksModal(message.failure)
-      }).finally(()=>{
-           let inputs = form.querySelectorAll('input').forEach(item => {item.value = ""})
-      })
+        }).catch(() => {
+          showThanksModal(message.failure)
+        }).finally(() => {
+          let inputs = form.querySelectorAll('input').forEach(item => { item.value = "" })
+        })
     })
   }
 
@@ -281,19 +283,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
     let thanksModal = document.createElement('div')
     thanksModal.classList.add('modal__dialog')
-    thanksModal.innerHTML =`
+    thanksModal.innerHTML = `
     <div class="modal__content">
       <div class="modal__close" data-close>x</div>
       <div class="modal__title">${message}</div>
     <div>`
 
     document.querySelector('.modal').append(thanksModal)
-    setTimeout(()=>{
+    setTimeout(() => {
       thanksModal.remove()
-   
+
       pevModal.classList.remove('hide')
       closeModal()
-    },4000)
+    }, 4000)
   }
 
 
@@ -305,75 +307,183 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let currentSlide = document.querySelector('#current')
   let totalSlide = document.querySelector("#total")
-   
-  const allImg = ["img/slider/pepper.jpg","img/slider/food-12.jpg","img/slider/olive-oil.jpg","img/slider/paprika.jpg",]
- 
+
+  const allImg = ["img/slider/pepper.jpg", "img/slider/food-12.jpg", "img/slider/olive-oil.jpg", "img/slider/paprika.jpg",]
+
   let offer__img = document.querySelector('.offer__img')
-  
+
   function showTotalSlide(array) {
-    let totalAllImg=0
-    for (let i =0; i<array.length; i++){
+    let totalAllImg = 0
+    for (let i = 0; i < array.length; i++) {
       totalAllImg++
     }
     console.log(totalAllImg);
-    if (totalAllImg <10){
-      totalSlide.innerHTML=`0${totalAllImg}`
+    if (totalAllImg < 10) {
+      totalSlide.innerHTML = `0${totalAllImg}`
     }
-    else{
-      totalSlide.innerHTML=totalAllImg
+    else {
+      totalSlide.innerHTML = totalAllImg
     }
-    
+
   }
 
   let currentIndex = 1
   function showCurrentSlide() {
-    if(currentIndex < 10){
-      currentSlide.innerHTML=`0${currentIndex}`
+    if (currentIndex < 10) {
+      currentSlide.innerHTML = `0${currentIndex}`
     }
-    else{
-      currentSlide.innerHTML= currentIndex
+    else {
+      currentSlide.innerHTML = currentIndex
     }
-    
+
   }
 
-  
-    nextSlide.addEventListener('click',()=>{
-      if(currentIndex >= allImg.length){
-        currentIndex=0
-        currentIndex++
-        offer__img.src=allImg[currentIndex-1]
-        showCurrentSlide(allImg)
-      }else{
-        currentIndex++
-        offer__img.src=allImg[currentIndex-1]
-        showCurrentSlide(allImg)
-      }
-      
-      console.log(currentIndex);
-    })
-  
 
- 
-    prevSlide.addEventListener('click',()=>{
-      
-      if(currentIndex <= 1){
-        currentIndex=allImg.length+1
-        currentIndex--
-        offer__img.src=allImg[currentIndex-1]
-        showCurrentSlide(allImg)
-      }
-      else{
-        currentIndex--
-        offer__img.src=allImg[currentIndex-1]
-        showCurrentSlide(allImg)
-      }
-      console.log(currentIndex);
-    })
-  
+  nextSlide.addEventListener('click', () => {
+    if (currentIndex >= allImg.length) {
+      currentIndex = 0
+      currentIndex++
+      offer__img.src = allImg[currentIndex - 1]
+      showCurrentSlide(allImg)
+    } else {
+      currentIndex++
+      offer__img.src = allImg[currentIndex - 1]
+      showCurrentSlide(allImg)
+    }
+
+    console.log(currentIndex);
+  })
+
+
+
+  prevSlide.addEventListener('click', () => {
+
+    if (currentIndex <= 1) {
+      currentIndex = allImg.length + 1
+      currentIndex--
+      offer__img.src = allImg[currentIndex - 1]
+      showCurrentSlide(allImg)
+    }
+    else {
+      currentIndex--
+      offer__img.src = allImg[currentIndex - 1]
+      showCurrentSlide(allImg)
+    }
+  })
+
 
   showCurrentSlide()
   showTotalSlide(allImg)
 
+
+  // Калькулятор каллорий
+  let gender = document.querySelector("#gender")
+  let activity = document.querySelector(".calculating__choose_big")
+  let innerRes = document.querySelector("#totalCal")
+  innerRes.innerHTML="____"
+
+  function chooseOne(identeficator, div) {
+    let choseField = document.querySelector(identeficator)
+    choseField.querySelectorAll(".choose").forEach(item => {
+      item.addEventListener("click", (e) => {
+        let target = e.target
+        div.querySelectorAll(".choose").forEach(item => {
+          item.classList.remove("calculating__choose-item_active")
+
+        })
+        target.classList.add("calculating__choose-item_active")
+
+      })
+    })
+  }
+  chooseOne("#gender", gender)
+  chooseOne(".calculating__choose_big", activity)
+
+  let sex
+  let activit
+  let result
+  let weight
+  let height
+  let age
+
+  document.querySelector(".calculating__choose_medium").querySelectorAll("chose")
+  
+  function getStaticInfo(wrapper, selector){
+    
+    document.querySelector(wrapper).querySelectorAll(selector).forEach(item =>{
+      item.addEventListener('click', function calc(e){
+        let target = e.target
+        if (target.getAttribute('data-gender')){
+          sex = target.getAttribute('data-gender')
+          if (sex === 447.8) {
+            result =( calcAllCalories(sex,9.563,1.85,4.676,activit))
+          }
+          else{
+            result =( calcAllCalories(sex,13.75,5.003,6.775,activit))
+          }
+         
+        }
+        if (target.getAttribute('data-activity')) {
+          activit = target.getAttribute('data-activity')
+          console.log(sex,activit);
+          if (sex === 447.8) {
+            result =( calcAllCalories(sex,9.563,1.85,4.676,activit))
+          }
+          else{
+            result =( calcAllCalories(sex,13.75,5.003,6.775,activit))
+          }
+        }
+        
+        
+        
+
+        if (sex == undefined || activit == undefined ||weight == 0 || height == 0 || age== 0){
+          innerRes.innerHTML="____"
+        }
+        else if(isNaN(weight)){
+          document.querySelector("#weight").style.border = "5px solid red"
+          alert("failure")
+        }
+        else if(isNaN(height)){
+          document.querySelector("#height").style.border = "5px solid red"
+          alert("failure")
+        }
+        else if(isNaN(age)){
+          document.querySelector("#age").style.border = "5px solid red"
+          alert("failure")
+        }
+        else{
+          document.querySelector(".calculating__choose_medium").querySelectorAll(".choose").forEach(
+            item =>{
+              item.style.border = '1px solid black'
+            }
+          )
+          innerRes.innerHTML=Math.ceil(result)
+        }
+
+ 
+      })
+    
+    })
+
+   
+  }
+
+  getStaticInfo("#gender",".choose")
+  getStaticInfo(".calculating__choose_big",".choose")
+
+  function calcAllCalories(genderCoeff,weightCoeff,heightCoeff,ageCoeff,activityCoeff){
+    weight = +document.querySelector("#weight").value
+    height = +document.querySelector("#height").value
+    age = +document.querySelector("#age").value
+
+    let res = ((+genderCoeff + (+weightCoeff * +weight) + (+heightCoeff * +height)-(+ageCoeff * +age))) * +activityCoeff
+    console.log(genderCoeff,weightCoeff,heightCoeff,ageCoeff,activityCoeff,weight,height,age,res);
+    return res
+    
+  }
+  
+  
 })
 
 
