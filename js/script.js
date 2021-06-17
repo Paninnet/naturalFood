@@ -317,7 +317,7 @@ window.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < array.length; i++) {
       totalAllImg++
     }
-    console.log(totalAllImg);
+
     if (totalAllImg < 10) {
       totalSlide.innerHTML = `0${totalAllImg}`
     }
