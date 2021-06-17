@@ -442,15 +442,12 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         else if(isNaN(weight)){
           document.querySelector("#weight").style.border = "5px solid red"
-          alert("failure")
         }
         else if(isNaN(height)){
           document.querySelector("#height").style.border = "5px solid red"
-          alert("failure")
         }
         else if(isNaN(age)){
           document.querySelector("#age").style.border = "5px solid red"
-          alert("failure")
         }
         else{
           document.querySelector(".calculating__choose_medium").querySelectorAll(".choose").forEach(
@@ -483,6 +480,38 @@ window.addEventListener("DOMContentLoaded", () => {
     
   }
   
+  document.querySelector('.calculating__choose_medium').querySelectorAll('.choose').forEach(item =>{
+    item.addEventListener('input',() =>{
+      if (sex === 447.8) {
+        result =( calcAllCalories(sex,9.563,1.85,4.676,activit))
+      }
+      else{
+        result =( calcAllCalories(sex,13.75,5.003,6.775,activit))
+      }
+      if (sex == undefined || activit == undefined ||weight == 0 || height == 0 || age== 0){
+        innerRes.innerHTML="____"
+      }
+      else if(isNaN(weight)){
+        document.querySelector("#weight").style.border = "5px solid red"
+      }
+      else if(isNaN(height)){
+        document.querySelector("#height").style.border = "5px solid red"
+      }
+      else if(isNaN(age)){
+        document.querySelector("#age").style.border = "5px solid red"
+        
+      }
+      else{
+        document.querySelector(".calculating__choose_medium").querySelectorAll(".choose").forEach(
+          item =>{
+            item.style.border = '1px solid black'
+          }
+        )
+        innerRes.innerHTML=Math.ceil(result)
+      }
+
+    } )
+  })
   
 })
 
