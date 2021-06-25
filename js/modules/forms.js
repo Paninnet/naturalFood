@@ -1,5 +1,7 @@
-function forms () {
-   let form = document.querySelectorAll('form').forEach(item => {
+import { closeModal, openModal} from './modalCards'
+import {postData} from '../services/services'
+function forms (formSelector,modalTimerId) {
+   let form = document.querySelectorAll(formSelector).forEach(item => {
       bindpostForm(item)
     })
    
@@ -9,16 +11,7 @@ function forms () {
       failure: "failure"
     }
    
-    let postData = async (url, data) => {
-      let res = await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: data
-      })
-      return await res.json()
-    }
+
    
     function bindpostForm(form) {
       form.addEventListener("submit", (e) => {
@@ -59,7 +52,7 @@ function forms () {
       let pevModal = document.querySelector(".modal__dialog")
    
       pevModal.classList.add('hide')
-      openModal()
+      openModal('.modal', modalTimerId)
    
       let thanksModal = document.createElement('div')
       thanksModal.classList.add('modal__dialog')
@@ -74,8 +67,8 @@ function forms () {
         thanksModal.remove()
    
         pevModal.classList.remove('hide')
-        closeModal()
+        closeModal('.modal')
       }, 4000)
     }
 }
-module.exports = forms
+export default   forms

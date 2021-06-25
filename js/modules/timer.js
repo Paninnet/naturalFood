@@ -1,8 +1,8 @@
-function timer (){
+function timer (id, deadline){
    // ТАЙМЕР
 
 
-  const deadLine = "2021-09-30"
+
   function getTimeRemaining(endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date())
     let days = Math.floor(t / (1000 * 60 * 60 * 24))
@@ -28,7 +28,7 @@ function timer (){
       return num
     }
   }
-  function setClock(element, endtime) {
+  function setClock(element, deadline) {
     let time = document.querySelector(element)
     let days = time.querySelector('#days')
     let hours = time.querySelector('#hours')
@@ -38,7 +38,7 @@ function timer (){
     uptadeClock()
 
     function uptadeClock() {
-      let time = getTimeRemaining(endtime)
+      let time = getTimeRemaining(deadline)
 
       days.innerHTML = getZero(time.days)
       hours.innerHTML = getZero(time.hours)
@@ -51,8 +51,8 @@ function timer (){
     }
 
   }
-  setClock('.timer', deadLine)
+  setClock(id, deadline)
 
 }
 
-module.exports = timer
+export default  timer

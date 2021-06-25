@@ -77,4 +77,4 @@ showTotalSlide(allImg)
 
 }
 
-module.exports = slider;
+export default  slider;
