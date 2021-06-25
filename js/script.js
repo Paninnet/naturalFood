@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   tabs('.tabheader__item','.tabcontent','.tabheader__items' , 'tabheader__item_active')
   modalCards('[data-modal]', '.modal', modalTimerId)
-  timer('.timer','2020-30-09')
+  timer('.timer','2021-09-30')
   cards()
   calc()
   forms('form',modalTimerId)
