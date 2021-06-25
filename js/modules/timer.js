@@ -1,58 +1,54 @@
-function timer (id, deadline){
-   // ТАЙМЕР
+function timer(id, deadline) {
+   function getTimeRemaining(endtime) {
+       const t = Date.parse(endtime) - Date.parse(new Date()),
+           days = Math.floor( (t/(1000*60*60*24)) ),
+           seconds = Math.floor( (t/1000) % 60 ),
+           minutes = Math.floor( (t/1000/60) % 60 ),
+           hours = Math.floor( (t/(1000*60*60) % 24) );
 
+       return {
+           'total': t,
+           'days': days,
+           'hours': hours,
+           'minutes': minutes,
+           'seconds': seconds
+       };
+   }
 
+   function getZero(num){
+       if (num >= 0 && num < 10) { 
+           return '0' + num;
+       } else {
+           return num;
+       }
+   }
 
-  function getTimeRemaining(endtime) {
-    const t = Date.parse(endtime) - Date.parse(new Date())
-    let days = Math.floor(t / (1000 * 60 * 60 * 24))
-    let hours = Math.floor((t / (1000 * 60 * 60)) % 24)
-    let minutes = Math.floor((t / 1000 / 60) % 60)
-    let seconds = Math.floor((t / 1000) % 60)
+   function setClock(selector, endtime) {
 
-    return {
-      "total": t,
-      "days": days,
-      "hours": hours,
-      "minutes": minutes,
-      "seconds": seconds
-    }
+       const timer = document.querySelector(selector),
+           days = timer.querySelector("#days"),
+           hours = timer.querySelector('#hours'),
+           minutes = timer.querySelector('#minutes'),
+           seconds = timer.querySelector('#seconds'),
+           timeInterval = setInterval(updateClock, 1000);
 
-  }
+       updateClock();
 
-  function getZero(num) {
-    if (num >= 0 && num < 10) {
-      return `0${num}`
-    }
-    else {
-      return num
-    }
-  }
-  function setClock(element, deadline) {
-    let time = document.querySelector(element)
-    let days = time.querySelector('#days')
-    let hours = time.querySelector('#hours')
-    let minutes = time.querySelector('#minutes')
-    let seconds = time.querySelector('#seconds')
-    let timeInterval = setInterval(uptadeClock, 1000)
-    uptadeClock()
+       function updateClock() {
+           const t = getTimeRemaining(endtime);
 
-    function uptadeClock() {
-      let time = getTimeRemaining(deadline)
+           days.innerHTML = getZero(t.days);
+           hours.innerHTML = getZero(t.hours);
+           minutes.innerHTML = getZero(t.minutes);
+           seconds.innerHTML = getZero(t.seconds);
 
-      days.innerHTML = getZero(time.days)
-      hours.innerHTML = getZero(time.hours)
-      minutes.innerHTML = getZero(time.minutes)
-      seconds.innerHTML = getZero(time.seconds)
+           if (t.total <= 0) {
+               clearInterval(timeInterval);
+           }
+       }
+   }
 
-      if (time.total <= 0) {
-        clearInteval(timeInterval)
-      }
-    }
-
-  }
-  setClock(id, deadline)
-
+   setClock(id, deadline);
 }
 
-export default  timer
+export default timer;
